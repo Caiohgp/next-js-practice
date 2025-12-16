@@ -1,0 +1,5 @@
+@reference "../app/globals.css";
+
+.menu{
+    @apply md:p-1 hover:bg-white hover:text-blue-900 text-2xl md:text-base
+}
