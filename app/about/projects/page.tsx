@@ -2,6 +2,11 @@ import { Suspense } from "react"
 import ProjectList from "./components/projectList"
 import ProjectListLoading from "./components/projectListLoading"
 import { ErrorBoundary } from "react-error-boundary"
+import { Metadata } from "next"
+
+export const metadata : Metadata = {
+    title:"Projects"
+}
 
 export default async function ProjectsPage() {
 
