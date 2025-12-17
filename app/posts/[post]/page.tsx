@@ -1,30 +1,26 @@
-import { Metadata, ResolvingMetadata } from "next";
-import { notFound } from "next/navigation";
-import { title } from "process";
-
-export const dynamic = 'force-dynamic';
+import { notFound } from "next/navigation"
 
 type PostsPageProps = {
-    params: {
-        post: string;
-    };
-};
+  params: {
+    post: string
+  }
+}
 
-export default async function PostPage({params}: PostsPageProps){
+export default async function PostPage({ params }: PostsPageProps) {
 
-    const postId = (await params)
+  const postId = (await params).post
 
-    console.log(postId)
-    const response = await fetch(`http://localhost:3001/posts/${postId}`)
-    const blogPost = await response.json()
+  const response = await fetch(`http://localhost:3001/posts/${postId}`)
 
-    if(postId.post >= '7')
-        notFound()
+  if (!response.ok) notFound()
 
-    return <>
-        <h2 className="text-4xl mb-5">{blogPost.title}</h2>
-        <p>{blogPost.text}</p>
-        {blogPost.views}
-    </>;
+  const blogPost = await response.json()
 
+  return (
+    <>
+      <h2 className="text-4xl mb-5">{blogPost.title}</h2>
+      <p>{blogPost.text}</p>
+      <span>{blogPost.views}</span>
+    </>
+  )
 }
