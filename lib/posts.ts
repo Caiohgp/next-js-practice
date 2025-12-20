@@ -27,7 +27,7 @@ export async function getPost(slug : string) {
   })
 }
 
-export async function getPostsList({tags}: {tags : string[]}){
+export async function getPostsList({tags, newest}: {tags : string[], newest : string}){
       const files = fs.readdirSync(
         path.join(
             process.cwd(), 'content'
@@ -40,13 +40,28 @@ export async function getPostsList({tags}: {tags : string[]}){
 
         return {
             frontmatter: frontmatter,
-            slug: filename.replace('.mdx', '')
+            slug: filename.replace('.mdx', ''),
+            parsedDate: Date.parse(frontmatter.date)
         }
         })
     )
 
+    let sortedList = postList
+
+    const isNewest = newest === "true"
+
+
+    if(isNewest){
+      console.log("I'm here")
+      sortedList = postList.sort((a,b) => (
+          new Date(b.parsedDate).getTime() - 
+          new Date(a.parsedDate).getTime() 
+        )
+      )
+    }
+
     if (tags.length > 0){
-      const filteredPosts = postList.filter(
+      const filteredPosts = sortedList.filter(
         post  => post.frontmatter.tags.some(
           tag => tags.includes(tag)
         )
@@ -55,5 +70,5 @@ export async function getPostsList({tags}: {tags : string[]}){
       return filteredPosts
     }
 
-    return postList
+    return sortedList
 }

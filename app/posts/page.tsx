@@ -6,11 +6,12 @@ export type PostFrontmatter = {
   title: string
   date: string
 }
-export default async function BlogPostsPage({searchParams} : {searchParams: { tag?: string }}) {
+export default async function BlogPostsPage({searchParams} : {searchParams: { tag?: string , newest? : string}}) {
 
-    const tagsSeparated = (await searchParams).tag?.split(',')
+    const searchParam = await searchParams
+    const tagsSeparated = searchParam.tag?.split(',')
 
-    const posts = await getPostsList({tags:tagsSeparated ?? []})
+    const posts = await getPostsList({tags:tagsSeparated ?? [], newest:searchParam.newest ?? "false"})
 
     return (
     <>
