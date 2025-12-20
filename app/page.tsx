@@ -20,7 +20,7 @@ export default function Home() {
 
   }
 
-  const cards = names.map((card,index) => <Cards key={index} children={card}/>)
+  const cards = names.map((card,index) => <Cards key={index} >{card}</Cards>)
 
   return (
     <div className="space-y-5">

@@ -1,11 +1,16 @@
 import { notFound } from "next/navigation"
-import { getPost } from "@/lib/posts"
+import { getPost as getPostsUncached } from "@/lib/posts"
+import {cache} from 'react'
 
 type PostsPageProps = {
   params: {
     slug: string
   }
 }
+
+const getPost = cache(
+  async (slug : string) => await getPostsUncached(slug)
+)
 
 export async function generateMetadata(
   { params }: PostsPageProps){

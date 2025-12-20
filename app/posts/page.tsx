@@ -1,33 +1,16 @@
 
-import { getPost } from '@/lib/posts'
-import fs from 'fs'
+import { getPostsList } from '@/lib/posts'
 import Link from 'next/link'
-import path from 'path'
 
 export type PostFrontmatter = {
   title: string
   date: string
 }
-export default async function BlogPostsPage() {
+export default async function BlogPostsPage({searchParams} : {searchParams: { tag?: string }}) {
 
-    const files = fs.readdirSync(
-        path.join(
-            process.cwd(), 'content'
-        )
-    )
+    const tagsSeparated = (await searchParams).tag?.split(',')
 
-    const posts = await Promise.all(
-        files.map(async filename => {
-        const { frontmatter } = await getPost(filename)
-
-        return {
-            frontmatter: frontmatter,
-            slug: filename.replace('.mdx', '')
-        }
-        })
-    )
-
-    console.log(posts)
+    const posts = await getPostsList({tags:tagsSeparated ?? []})
 
     return (
     <>
