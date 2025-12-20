@@ -27,7 +27,7 @@ export async function getPost(slug : string) {
   })
 }
 
-export async function getPostsList({tags, newest}: {tags : string[], newest : string}){
+export async function getPostsList({tags, newest,page,limit}: {tags : string[], newest : boolean, page : number, limit : number}){
       const files = fs.readdirSync(
         path.join(
             process.cwd(), 'content'
@@ -46,14 +46,10 @@ export async function getPostsList({tags, newest}: {tags : string[], newest : st
         })
     )
 
-    let sortedList = postList
+    let sortedPosts = postList
 
-    const isNewest = newest === "true"
-
-
-    if(isNewest){
-      console.log("I'm here")
-      sortedList = postList.sort((a,b) => (
+    if(newest){
+      sortedPosts = postList.sort((a,b) => (
           new Date(b.parsedDate).getTime() - 
           new Date(a.parsedDate).getTime() 
         )
@@ -61,14 +57,19 @@ export async function getPostsList({tags, newest}: {tags : string[], newest : st
     }
 
     if (tags.length > 0){
-      const filteredPosts = sortedList.filter(
+      sortedPosts = sortedPosts.filter(
         post  => post.frontmatter.tags.some(
           tag => tags.includes(tag)
         )
       )
-      
-      return filteredPosts
     }
 
-    return sortedList
+    const startIndex = (page - 1) * limit
+    const endIndex = page * limit
+
+    return {
+      posts: sortedPosts.slice(startIndex,endIndex),
+      pageCount: Math.ceil(sortedPosts.length / limit)
+    }
+
 }

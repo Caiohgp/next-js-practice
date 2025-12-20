@@ -1,4 +1,5 @@
 
+import PaginationComponent from '@/components/pagination'
 import { getPostsList } from '@/lib/posts'
 import Link from 'next/link'
 
@@ -6,18 +7,33 @@ export type PostFrontmatter = {
   title: string
   date: string
 }
-export default async function BlogPostsPage({searchParams} : {searchParams: { tag?: string , newest? : string}}) {
+export default async function BlogPostsPage({searchParams} : 
+    {searchParams: { tag?: string , newest? : string ,page : string, limit : string }}) {
 
     const searchParam = await searchParams
     const tagsSeparated = searchParam.tag?.split(',')
 
-    const posts = await getPostsList({tags:tagsSeparated ?? [], newest:searchParam.newest ?? "false"})
+    const posts = await getPostsList(
+        {
+            tags:tagsSeparated ?? [], 
+            newest:searchParam.newest === "true",
+            page:Number(searchParam.page) || 1,
+            limit:Number(searchParam.limit) || 3
+
+        }
+    )
+
 
     return (
     <>
         <h1>Recent Posts</h1>
-        <ul>
-            {posts.map( post =>
+        <div className='mt-8'>
+            Display&nbsp;
+            {searchParam.newest === "true" && <Link href={`/posts?newest=false`}>Oldest Posts</Link>}
+            {(searchParam.newest === "false" || !searchParam.newest) && <Link href={`/posts?newest=true`}>Newest Posts</Link>}
+        </div>
+        <ul className='mt-8'>
+            {posts.posts.map( post =>
                 <li key={post.slug}> 
                     <Link href={`/posts/${post.slug}`}
                     className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
@@ -29,6 +45,10 @@ export default async function BlogPostsPage({searchParams} : {searchParams: { ta
             )
             }
         </ul>
+
+        <div className='mt-8'>
+            <PaginationComponent pageCount={posts.pageCount}/>
+        </div>
     </>
     )
 }
