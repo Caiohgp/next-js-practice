@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { compileMDX } from 'next-mdx-remote/rsc'
+import H1 from '@/components/h1'
 
 export type PostFrontmatter = {
   title: string
@@ -19,11 +20,15 @@ export async function loadPost(slug : string) {
 export async function getPost(slug : string) {
   const source = await loadPost(slug)
 
-  return compileMDX<PostFrontmatter>({
+  return compileMDX <PostFrontmatter>({
     source,
+    components:{
+      h1: (props) => <H1 {...props}/>
+    },
     options: {
       parseFrontmatter: true
     }
+
   })
 }
 

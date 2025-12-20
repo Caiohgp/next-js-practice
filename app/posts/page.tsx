@@ -1,4 +1,5 @@
 
+import H1 from '@/components/h1'
 import PaginationComponent from '@/components/pagination'
 import { getPostsList } from '@/lib/posts'
 import Link from 'next/link'
@@ -18,7 +19,7 @@ export default async function BlogPostsPage({searchParams} :
             tags:tagsSeparated ?? [], 
             newest:searchParam.newest === "true",
             page:Number(searchParam.page) || 1,
-            limit:Number(searchParam.limit) || 3
+            limit:Number(searchParam.limit) || 2
 
         }
     )
@@ -26,7 +27,7 @@ export default async function BlogPostsPage({searchParams} :
 
     return (
     <>
-        <h1>Recent Posts</h1>
+        <H1>Recent Posts</H1>
         <div className='mt-8'>
             Display&nbsp;
             {searchParam.newest === "true" && <Link href={`/posts?newest=false`}>Oldest Posts</Link>}

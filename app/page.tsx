@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Cards from "@/components/cards";
+import H1 from "@/components/h1";
 
 export default function Home() {
   const[numberOfCards,setNumberOfCards] = useState(3)
@@ -25,7 +26,7 @@ export default function Home() {
   return (
     <div className="space-y-5">
 
-      <p>{textShown}</p>
+      <H1>{textShown}</H1>
       {isVisible && cards}
       <div className="flex space-x-4">
         <button className="border p-2"  onClick={handleClickVisibility}>
