@@ -1,14 +1,15 @@
-'use client'
+import PostPreview from "@/components/postPreview"
 
-export default function AboutLayout({children} : any){
+export default async function AboutLayout({children} : {children: React.ReactNode}) {
+
     return (
         <div>
             <div>{children}</div>
 
-            <div className="text-3x1 mt-10">Also, check this!</div>
-            <div>Recommendation 1</div>
-            <div>Recommendation 2</div>
-            <div>Recommendation 3</div>
+            <div className="mt-10">
+                <h3>Also, check my most recent posts</h3>
+                <PostPreview/>
+            </div>
         </div>
     )
 }

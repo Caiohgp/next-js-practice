@@ -1,7 +1,8 @@
 
-export default function Cards({children, className} : any){
-
-  const defaultName : string = 'Jordan';
+export default function Cards({children, className} : {
+  children: React.ReactNode
+  className?: string
+}){
 
   return (
     <div className={`border rounded-md border-gray-600 p-4 ${className}`}>
