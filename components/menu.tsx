@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Navigation from "./navigation";
+import { ThemeToggle } from "./theme-toggle";
 
 export default function Menu(){
         return (
@@ -12,7 +13,7 @@ export default function Menu(){
             </div>
 
             <div>
-                Toggle
+                <ThemeToggle/>
             </div>
 
         </header>
