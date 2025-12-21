@@ -62,7 +62,7 @@ export default function Home() {
 
       {isVisible && postCards}
 
-      <hr/>
+      <hr />
 
       <h2>Cards do Davi</h2>
 

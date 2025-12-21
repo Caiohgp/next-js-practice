@@ -1,7 +1,12 @@
 import H1 from '@/components/h1'
 import PaginationComponent from '@/components/pagination'
 import { getPostsList } from '@/lib/posts'
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata : Metadata = {
+    title:"Posts"
+}
 
 export type PostFrontmatter = {
   title: string

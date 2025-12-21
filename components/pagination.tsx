@@ -19,7 +19,7 @@ export default function PaginationComponent({pageCount} : {pageCount : number}){
     params.set('page',currentPage.toString())
 
     return (
-        <ul className="flex justify-center space-x-4 font-mono text-lg">
+        <ul className="flex justify-center space-x-4 font-mono text-lg my-2">
             {pages.map(pageNumber => {
                 const isActive = pageNumber === currentPage
                 const params = new URLSearchParams(searchParams)

@@ -9,7 +9,9 @@ export const metadata : Metadata = {
     title:"Projects"
 }
 
-export default async function ProjectsPage() {
+export default async function ProjectsPage({searchParams} : {searchParams: {page?: string}}) {
+
+    const page = Number( (await searchParams).page) || 1
 
     return (
 
@@ -17,7 +19,7 @@ export default async function ProjectsPage() {
             <H1>Projects</H1>
             <ErrorBoundary fallback={<div>My Projects are currently unavailable. Please try again later</div>}>
                 <Suspense fallback={<ProjectListLoading/>}>
-                    <ProjectList/>
+                    <ProjectList page={page}/>
                 </Suspense>
             </ErrorBoundary>
             
