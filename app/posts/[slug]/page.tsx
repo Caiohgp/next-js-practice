@@ -32,8 +32,8 @@ export async function generateMetadata(
 
 export default async function PostPage({ params }: PostsPageProps) {
   let post
-  const slug = (await params).slug
-
+  const { slug } = await params
+  
   try {
     post = await getPost(slug)
   }catch {

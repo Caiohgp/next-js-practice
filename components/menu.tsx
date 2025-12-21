@@ -7,7 +7,7 @@ export default function Menu(){
         <header className="flex justify-between md:items-center">
             <div className="flex items-center md:space-x-12">
                 <div className="hidden md:block">
-                    <Link href="/">Logo</Link>
+                    <Link className="font-mono text-2xl" href="/">Caio Pereira</Link>
                 </div>
                 <Navigation/>
             </div>

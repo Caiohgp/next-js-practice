@@ -2,29 +2,29 @@ import Cards from "@/components/cards"
 
 export default async function ProjectList() {
      const response = await fetch(
-        'http://localhost:3001/posts'
+        'https://api.github.com/users/caiohgp/repos'
         //,{next: { revalidate: 3 }}
     )
-    const posts = await response.json()
+    const repos = await response.json()
 
     return (
         <ul className="grid md:grid-cols-2 gap-3">
-        {posts.map((post : any) => (
+        {repos.map((repo : any) => (
             
-            <li key={post.id} >
+            <li key={repo.id} >
                 <Cards className="max-h-21 overflow-hidden">
                     <div className="flex justify-between items-center">
                         <div className="text-2xl">
-                            Título: {post.title}
+                            Título: {repo.name}
                         </div>
                         <div>
-                            📖{post.views}
+                            📖{repo.views}
                         </div>
 
                     </div>
                     <div>
                         <div className="mt-2">
-                            Descrição: {post.description}
+                            Descrição: {repo.description}
                         </div>
                     </div>
                 </Cards>  

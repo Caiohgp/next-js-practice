@@ -15,8 +15,6 @@ export default function PaginationComponent({pageCount} : {pageCount : number}){
         pages.push(i)
     }
 
-
-
     const params = new URLSearchParams(searchParams.toString())
     params.set('page',currentPage.toString())
 
