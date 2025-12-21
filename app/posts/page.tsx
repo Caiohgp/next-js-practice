@@ -11,6 +11,8 @@ export type PostFrontmatter = {
 export default async function BlogPostsPage({searchParams} : 
     {searchParams: { tag?: string , newest? : string ,page : string, limit : string }}) {
 
+    const availableTags = ['#javascript','#typescript','#html','#css','#java','#nextjs']
+
     const searchParam = await searchParams
     const tagsSeparated = searchParam.tag?.split(',')
 
@@ -19,7 +21,7 @@ export default async function BlogPostsPage({searchParams} :
             tags:tagsSeparated ?? [], 
             newest:searchParam.newest === "true",
             page:Number(searchParam.page) || 1,
-            limit:Number(searchParam.limit) || 2
+            limit:Number(searchParam.limit) || 3
 
         }
     )
@@ -28,6 +30,16 @@ export default async function BlogPostsPage({searchParams} :
     return (
     <>
         <H1>Recent Posts</H1>
+
+        <div className='mt-8'>
+            Tags:&nbsp;
+            {availableTags.map( (tag, index) =>
+                <span className="hover:bg-gray-100 hover:text-gray-700" key={index}>
+                    <Link href={`/posts?tag=${tag.replace('#','')}`}> {tag} </Link>
+                </span>
+            )}
+        </div>
+
         <div className='mt-8'>
             Display&nbsp;
             {searchParam.newest === "true" && <Link href={`/posts?newest=false`}>Oldest Posts</Link>}
